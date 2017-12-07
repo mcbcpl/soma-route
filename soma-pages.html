@@ -1,0 +1,95 @@
+<link rel="import" href="../app-route/app-route.html">
+<link rel="import" href="../paper-spinner/paper-spinner.html">
+
+<link rel="import" href="list-page.html">
+<link rel="import" href="post-page.html">
+
+<dom-module id="soma-pages">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #FFF;
+      }
+
+    </style>
+
+    <app-route route="{{route}}"
+               pattern="/list"
+               active="{{listActive}}">
+    </app-route>
+
+    <app-route route="{{route}}"
+               pattern="/posts/:slug"
+               active="{{postsActive}}"
+               data="{{postsData}}">
+ 	  </app-route>
+
+    <list-page category="{{category}}"
+               active={{listActive}}
+               loading="{{isLoading}}">
+    </list-page>
+
+    <post-page post="{{postsData.slug}}"
+               active="{{postsActive}}"
+               loading="{{isLoading}}">
+    </post-page>
+
+    <div class="overlay" hidden$="[[!isLoading]]">
+      <paper-spinner active="[[isLoading]]"></paper-spinner>
+    </div>
+
+  </template>
+
+  <script>
+    class SomaPages extends Polymer.Element {
+      static get is() { return 'soma-pages'; }
+      static get properties() {
+        return {
+          prop1: {
+          type: String,
+          value: 'soma-pages'
+          //observer: "_lockScroll(isLoading)"
+          },
+
+          route: {
+        	type: String,
+        	value: 'soma-pages'
+        	//observer: "_lockScroll(isLoading)"
+          },
+
+          category: {
+          type: String,
+          value: 'soma-pages'
+          //observer: "_lockScroll(isLoading)"
+          }
+        };
+      }
+
+      /*_lockScroll(isLoading) {
+        if (isLoading) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = 'visible';
+        }
+      }*/
+    }
+
+    window.customElements.define(SomaPages.is, SomaPages);
+  </script>
+
+</dom-module>
